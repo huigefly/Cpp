@@ -3,9 +3,11 @@
 
 #include "INotifer.h"
 
+// 模拟老板类
 class CBoss : public CINotifer
 {
 public:
+	// 编写通用接口
 	virtual int notify(void *pParam){
 		printf("CBoss notify:%d\n", *(int*)pParam);
 	}
