@@ -6,6 +6,7 @@
 #include <string>
 using namespace std;
 
+// define interface
 class CBase
 {
 public:
