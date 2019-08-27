@@ -11,6 +11,9 @@ int main()
 	}
 	printf ("ready print\n");
 	print (pHead);
+	pHead = reverse (pHead);
+	printf ("ready reverse\n");
+	print (pHead);
 
 	return 0;
 }

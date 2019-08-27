@@ -59,4 +59,22 @@ int del(node_t *pHead, int nValue)
 	return 0;
 }
 
+node_t* reverse(node_t *pHead)
+{
+	node_t *pCur = pHead;
+	node_t *pPre = NULL;
+	node_t *pNewHead = NULL;
+	while (pCur) {
+		node_t *pNext = pCur->pNext;
+		if (NULL == pNext) {
+			pNewHead = pCur;
+		}
+		pCur->pNext = pPre;
+		pPre = pCur;
+		pCur = pNext;
+	}
+
+	return pNewHead;
+}
+
 #endif // LIST_H__
