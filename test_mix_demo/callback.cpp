@@ -24,7 +24,6 @@ typedef int (*cb_get[])(const char *p);
 
 int cry(cb_get cbg, const char *p)
 {
-    // 如何取到函数指针数据大小
     //int nNum = sizeof (cbg) / sizeof (cbg[0]);
     printf ("%d, %d\n", sizeof (cbg), sizeof (cbg[0]));
     int nNum = 4;
@@ -33,11 +32,21 @@ int cry(cb_get cbg, const char *p)
     }
 }
 
+int size(int *arr[])
+{
+    printf ("size:%p,%d, %d\n", arr, sizeof (arr), sizeof (arr[0]));
+
+    return 0;
+}
+
 int main()
 {
-    int i=100;
+    int i=100, a=1, b=2, c=3;
+    int *arr[] = {&a, &b, &c, &i};
     cb_get arrcb = {getA, getB, getC, getD};
     printf ("%d\n", sizeof (arrcb)/sizeof (arrcb[0]));
     cry(arrcb, "helloworld");
+    size(arr);
+    printf ("ex %p, size:%d\n", arr, sizeof (arr)/sizeof (arr[0]));
     return 0;
 }
