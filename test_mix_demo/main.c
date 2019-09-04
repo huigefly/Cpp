@@ -41,6 +41,7 @@ int main()
 	int value = 99;
 	constUse (value);
 
+	const int a;
 #if 0
 	// 位域
 	struct stu{

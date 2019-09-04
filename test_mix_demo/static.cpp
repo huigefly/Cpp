@@ -17,6 +17,7 @@ void func()
 
 int main()
 {
+    const int a;
     int i=100;
     while (i--){
         func();
