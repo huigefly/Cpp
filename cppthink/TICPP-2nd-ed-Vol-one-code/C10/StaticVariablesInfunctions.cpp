@@ -10,17 +10,20 @@ using namespace std;
 char oneChar(const char* charArray = 0) {
   static const char* s;
   if(charArray) {
+    cout << "if charArray:" << charArray << endl;
     s = charArray;
     return *s;
   }
-  else
+  else{
     require(s, "un-initialized s");
+  }
+    
   if(*s == '\0')
     return 0;
   return *s++;
 }
 
-char* a = "abcdefghijklmnopqrstuvwxyz";
+const char* a = "abcdefghijklmnopqrstuvwxyz";
 
 int main() {
   // oneChar(); // require() fails

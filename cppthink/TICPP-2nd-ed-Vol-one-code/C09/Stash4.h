@@ -22,7 +22,7 @@ public:
     quantity(0), next(0), storage(0) { 
     inflate(initQuantity); 
   }
-  Stash::~Stash() {
+  ~Stash() {
     if(storage != 0) 
       delete []storage;
   }

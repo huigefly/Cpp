@@ -4,7 +4,7 @@
 // (c) Bruce Eckel 2000
 // Copyright notice in Copyright.txt
 // Inline evaluation order
-
+#include <stdio.h>
 class Forward {
   int i;
 public:
@@ -16,5 +16,5 @@ public:
 
 int main() {
   Forward frwd;
-  frwd.f();
+  printf("%d\n", frwd.f());
 } ///:~

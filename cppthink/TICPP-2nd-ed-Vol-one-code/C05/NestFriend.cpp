@@ -16,21 +16,21 @@ public:
   void initialize();
   struct Pointer;
   friend struct Pointer;
-  struct Pointer {
-  private:
-    Holder* h;
-    int* p;
-  public:
-    void initialize(Holder* h);
-    // Move around in the array:
-    void next();
-    void previous();
-    void top();
-    void end();
-    // Access values:
-    int read();
-    void set(int i);
-  };
+    struct Pointer {
+    private:
+      Holder* h;
+      int* p;
+    public:
+      void initialize(Holder* h);
+      // Move around in the array:
+      void next();
+      void previous();
+      void top();
+      void end();
+      // Access values:
+      int read();
+      void set(int i);
+    };
 };
 
 void Holder::initialize() {
