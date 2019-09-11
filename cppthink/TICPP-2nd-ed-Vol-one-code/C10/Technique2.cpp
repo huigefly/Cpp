@@ -36,5 +36,7 @@ Dependency2& d2() {
 }
 
 int main() {
+  cout << "enter main" << endl;
   Dependency2& dep2 = d2();
+  cout << "leaving main" << endl;
 } ///:~
