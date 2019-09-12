@@ -13,6 +13,16 @@ public:
     CTest(int nValue=100):m_nValue(nValue){}
 };
 
+int change(int **p){
+    *(*p) = 6666;
+    return 0;
+}
+
+int changer(int*& p){
+    *p = 19988;
+    return 0;
+}
+
 int main()
 {
     ar = b;
@@ -31,5 +41,12 @@ int main()
     ctr1 = ctr2;  // 编译器不报错，但是没有效果
     cout << "ctr1:" << &ctr1 << endl;
 
+    int value = 100;
+    int* pValue = &value;
+    change (&pValue);
+    cout << "value:" << value << endl;
+    changer (pValue);
+    cout << "value:" << value << endl;
+    
     return 0;
 }
