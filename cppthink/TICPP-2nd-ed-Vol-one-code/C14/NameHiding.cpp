@@ -50,10 +50,10 @@ public:
 int main() {
   string s("hello");
   Derived1 d1;
-  int x = d1.f();
-  d1.f(s);
-  Derived2 d2;
-  x = d2.f();
+  int x = d1.f(); // base f
+  d1.f(s); // 1
+  Derived2 d2; 
+  x = d2.f(); // Derived2::f()
 //!  d2.f(s); // string version hidden
   Derived3 d3;
 //!  x = d3.f(); // return int version hidden

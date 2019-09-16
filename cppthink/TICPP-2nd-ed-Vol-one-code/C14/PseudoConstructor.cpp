@@ -3,11 +3,13 @@
 // Available at http://www.BruceEckel.com
 // (c) Bruce Eckel 2000
 // Copyright notice in Copyright.txt
+#include <cstdio>
+
 class X {
   int i;
   float f;
   char c;
-  char* s;
+  const char* s;
 public:
   X() : i(7), f(1.4), c('x'), s("howdy") {}
 };
@@ -16,4 +18,5 @@ int main() {
   X x;
   int i(100);  // Applied to ordinary definition
   int* ip = new int(47);
+  printf ("%d\n", *ip);
 } ///:~

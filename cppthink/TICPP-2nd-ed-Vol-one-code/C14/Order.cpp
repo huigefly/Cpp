@@ -1,25 +1,16 @@
-//: C14:Order.cpp
-// From Thinking in C++, 2nd Edition
-// Available at http://www.BruceEckel.com
-// (c) Bruce Eckel 2000
-// Copyright notice in Copyright.txt
-// Constructor/destructor order
 #include <fstream>
 using namespace std;
 ofstream out("order.out");
-
 #define CLASS(ID) class ID { \
 public: \
   ID(int) { out << #ID " constructor\n"; } \
   ~ID() { out << #ID " destructor\n"; } \
 };
-
 CLASS(Base1);
 CLASS(Member1);
 CLASS(Member2);
 CLASS(Member3);
 CLASS(Member4);
-
 class Derived1 : public Base1 {
   Member1 m1;
   Member2 m2;
@@ -46,4 +37,20 @@ public:
 
 int main() {
   Derived2 d2;
+  #if 0
+Base1 constructor
+Member1 constructor
+Member2 constructor
+Derived1 constructor
+Member3 constructor
+Member4 constructor
+Derived2 constructor
+Derived2 destructor
+Member4 destructor
+Member3 destructor
+Derived1 destructor
+Member2 destructor
+Member1 destructor
+Base1 destructor
+  #endif // 0
 } ///:~

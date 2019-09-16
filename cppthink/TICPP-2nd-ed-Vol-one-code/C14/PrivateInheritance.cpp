@@ -3,6 +3,9 @@
 // Available at http://www.BruceEckel.com
 // (c) Bruce Eckel 2000
 // Copyright notice in Copyright.txt
+#include <iostream>
+using namespace std;
+
 class Pet {
 public:
   char eat() const { return 'a'; }
@@ -19,8 +22,8 @@ public:
 
 int main() {
   Goldfish bob;
-  bob.eat();
-  bob.sleep();
-  bob.sleep(1);
+  cout << bob.eat() << endl;
+  cout << bob.sleep() << endl;
+  cout << bob.sleep(1) << endl;
 //! bob.speak();// Error: private member function
 } ///:~
