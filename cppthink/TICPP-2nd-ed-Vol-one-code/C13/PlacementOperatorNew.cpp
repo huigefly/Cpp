@@ -24,8 +24,9 @@ public:
 
 int main() {
   int l[10];
+  int a = 10;
   cout << "l = " << l << endl;
-  X* xp = new(l) X(47); // X at location l
+  X* xp = new(&a) X(47); // X at location l
   xp->X::~X(); // Explicit destructor call
   // ONLY use with placement!
 } ///:~

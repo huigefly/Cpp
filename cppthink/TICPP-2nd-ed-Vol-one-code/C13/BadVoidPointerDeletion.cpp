@@ -28,5 +28,5 @@ int main() {
   Object* a = new Object(40, 'a');
   delete a;
   void* b = new Object(40, 'b');
-  delete b;
+  delete (Object*)b;
 } ///:~
