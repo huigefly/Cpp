@@ -35,6 +35,6 @@ int main() {
        << p[0]->speak() << endl;
   cout << "p[1]->speak() = "
        << p[1]->speak() << endl;
-//! cout << "p[1]->sit() = "
-//!      << p[1]->sit() << endl; // Illegal
+  // cout << "p[1]->sit() = "
+  //      << p[1]->sit() << endl; // Illegal
 } ///:~

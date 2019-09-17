@@ -18,7 +18,7 @@ public:
 
 class Derived : public Base {
 public:
-  ~Derived() { cout << "~Derived()\n"; }
+  ~Derived() { cout << "~Derived()\n" ;f(); }
   void f() { cout << "Derived::f()\n"; }
 };
 
