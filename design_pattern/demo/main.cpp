@@ -3,113 +3,29 @@
 #include <string>
 #include <list>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+#include <pthread.h>
+#include "sub.h"
+#include "content.h"
 using namespace std;
 
 typedef void (*cb_handle)(string&);
-typedef enum {warn=0,info=1,erro=2,debu=3}log_enum_t;
 
-class COb
-{
-protected:
-    int flag;
-public:
-    virtual void recv(const string&);
-    COb(log_enum_t t):flag(t){}
-};
-
-class CSubject
-{
-protected:
-    list<COb*> m_listOb;
-    list<char*> m_listLog;
-public:
-    virtual void add(COb* p) = 0;
-    virtual void del(COb* p) = 0;   
-    virtual void notify() = 0;
-    virtual void addLine(char* p) = 0;
-    ~CSubject(){
-        list<char*>::iterator it;
-        for (it=m_listLog.begin(); it!=m_listLog.end(); it++){
-            if ((*it) != NULL) {
-                 cout << "free" << *it << endl;
-                free (*it);
-            }
-        }
-    }
-};
-
-class CSvr : public CSubject
-{
-public:
-    void add(COb* p){
-        m_listOb.push_back (p);
-    }
-    void del(COb* p){
-        list<COb*>::iterator it;
-        for (it=m_listOb.begin(); it!=m_listOb.end(); it++) {
-            if ((*it) == p) {
-                m_listOb.erase(it);
-            }
-        }
-    }
-    void notify(){
-        list<COb*>::iterator it;
-        for (it=m_listOb.begin(); it!=m_listOb.end(); it++) {
-            string s = "helloworld";
-            (*it)->recv (s);
-        }
-    }
-    void addLine(char* p){
-        m_listLog.push_back (p);
-    }
-
-};
-
-class CWarn : public COb
-{
-public:
-    void recv(const string& sLine){
-        cout << "CWarn:" << sLine << endl;
-    }
-    CWarn():COb(warn){}
-};
-class CInfo : public COb
-{
-public:
-    void recv(const string& sLine){
-        cout << "CInfo:" << sLine << endl;
-    }
-    CInfo():COb(info){}
-};
-class CErro : public COb
-{
-public:
-    void recv(const string& sLine){
-        cout << "CErro:" << sLine << endl;
-    }
-    CErro():COb(erro){}
-};
-class CDebu : public COb
-{
-public:
-    void recv(const string& sLine){
-        cout << "CDebu:" << sLine << endl;
-    }
-    CDebu():COb(debu){}
-};
+CContent* CContent::p = new CContent();
 
 class CReadMsg
 {
     char *m_pszBuffer;
     ifstream m_in;
 public:
-    void proc(CSubject* ps){
+    void proc(){
         while (!m_in.eof ()){
             m_pszBuffer = (char *)malloc (1024);
+            memset (m_pszBuffer, 0, 1024);
             m_in.getline(m_pszBuffer, 1024);
-            ps->addLine(m_pszBuffer);
-            //cout << szBuffer << endl;
+            CContent::getIntance()->add(m_pszBuffer);
+            //cout << m_pszBuffer << endl;
         }
     }
     CReadMsg(){
@@ -118,12 +34,49 @@ public:
     ~CReadMsg(){m_in.close ();}
 };
 
+void *proc(void *lparam)
+{
+    CSvr *psvr = (CSvr*)lparam;
+    pthread_detach (pthread_self());
+    CContent *pc = CContent::getIntance();
+    while (pc->size() > 0){
+        char *line = pc->pop();
+        if (strstr(line, "WARN")){
+            //cout << "proc:"<< line << endl << "size:" << pc->size() << endl;
+            psvr->notify (line, warn);
+        }else if (strstr(line, "ERRO")){
+            psvr->notify (line, erro);
+        }else if (strstr(line, "INFO")){
+            psvr->notify (line, info);
+        }else if (strstr(line, "DEBU")){
+            psvr->notify (line, debu);
+        }
+            
+    } 
+    cout << "thread exit" << endl;
+}
+
+void *procOb(void *lparam)
+{
+    COb *pob = (COb*)lparam;
+    pob->handle();
+}
 
 int main()
 {
+    COb *pob[4] = {new CWarn(),new CInfo(),new CDebu(),new CErro() };
     CSvr svr;
+    pthread_t obtid[4];
+    for (int i=0; i<4; i++){
+        svr.add(pob[i]);
+        pthread_create (&obtid[i], NULL, procOb, pob[i]);
+    }
+
     CReadMsg rm;
-    rm.proc(&svr);
+    rm.proc();
+
+    pthread_t tid;
+    pthread_create(&tid, NULL, proc, (void *)&svr);
 
     sleep (1000);
 
