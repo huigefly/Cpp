@@ -53,9 +53,10 @@ string execute_command(string cmd)
 
 int main()
 {
-    string value = execute_command(
-        "python /opt/work/code/bt-test/source/bt_proxy.py diff_size /opt/work/package/newtorrent/hello_157.base.torrent /opt/work/package/hello_157.base.torrent ");
+    //string value = execute_command(
+      //  "python /opt/work/code/bt-test/source/bt_proxy.py diff_size /opt/work/package/newtorrent/hello_157.base.torrent /opt/work/package/hello_157.base.torrent ");
 
+    string value = execute_command("cat /var/log/Images_hello_157.base_stdout.log |grep -a {.*status.*name.*|tail -n 1");
     printf("result:%s\n", value.c_str());
 
 
